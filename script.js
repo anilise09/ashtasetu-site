@@ -54,3 +54,44 @@ navLinks.addEventListener('click', (event) => {
   navLinks.classList.remove('is-open');
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+// The mascots dance only for people who welcome motion, and only while they are on screen; otherwise they hold
+// their first pose (the poster), so a reduced-motion visitor never sees them move.
+const mascots = [...document.querySelectorAll('video[data-mascot]')];
+const stillPlease = window.matchMedia('(prefers-reduced-motion: reduce)');
+const onScreen = new Map();
+function updateMascots() {
+  for (const video of mascots) {
+    if (!stillPlease.matches && onScreen.get(video)) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      if (stillPlease.matches) video.currentTime = 0;
+    }
+  }
+}
+if (mascots.length && 'IntersectionObserver' in window) {
+  const watcher = new IntersectionObserver((entries) => {
+    for (const entry of entries) onScreen.set(entry.target, entry.isIntersecting);
+    updateMascots();
+  });
+  mascots.forEach((video) => watcher.observe(video));
+  stillPlease.addEventListener('change', updateMascots);
+}
+
+// The hosts' speech bubble steps through its lines, a few seconds each, fading between them.
+const hosts = document.querySelector('.hosts[data-lines]');
+if (hosts) {
+  const bubble = hosts.querySelector('.hosts-bubble');
+  const lines = JSON.parse(hosts.dataset.lines);
+  let line = 0;
+  setInterval(() => {
+    if (document.hidden || getComputedStyle(hosts).display === 'none') return;
+    bubble.classList.add('fade');
+    setTimeout(() => {
+      line = (line + 1) % lines.length;
+      bubble.textContent = lines[line];
+      bubble.classList.remove('fade');
+    }, 280);
+  }, 5200);
+}
