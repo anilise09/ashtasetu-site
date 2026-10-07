@@ -6,7 +6,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff9f7">
-  <meta name="description" content="How to install AshtaSetu, an 18+ dating app in development, on Android and iPhone: what you need, the setup steps, and a recording of the real app being installed.">
+  <meta name="description" content="How to install AshtaSetu, an 18+ dating app in development, on Android and iPhone: what you need and the setup steps.">
   <title>Get the AshtaSetu app</title>
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
@@ -31,20 +31,21 @@
   <main id="main" class="doc shell">
     <span class="kicker">GET THE APP</span>
     <h1>AshtaSetu on your phone.<br><em>Almost there.</em></h1>
-    <p class="doc-lede">AshtaSetu is an 18+ dating app in development. The Android prototype is ready to try: it shows how AshtaSetu works with synthetic test profiles, needs no account and sends nothing anywhere. The iPhone app now builds and completes its critical flows in Apple’s Simulator, including the software path for notifications; public testing still waits for Apple signing, a physical-device check and TestFlight. Below are the steps for each phone and a short recording of the real app being installed.</p>
+    <p class="doc-lede">AshtaSetu is an 18+ dating app in development. The Android prototype, which shows how AshtaSetu works with synthetic test profiles, needs no account and sends nothing anywhere, is paused for now while it moves to the AshtaSetu name. The iPhone app now builds and completes its critical flows in Apple’s Simulator, including the software path for notifications; public testing still waits for Apple signing, a physical-device check and TestFlight. Below are the steps for each phone.</p>
 
     <nav class="doc-toc" aria-label="On this page">
-      <a href="#android">Android</a><a href="#iphone">iPhone</a><a href="#video">Watch the setup</a><a href="#questions">Questions</a>
+      <a href="#android">Android</a><a href="#iphone">iPhone</a><a href="#questions">Questions</a>
     </nav>
 
     <div class="app-grid">
       <section id="android" class="app-card" aria-labelledby="android-title">
         <div class="app-card-head">
           <h2 id="android-title">Android</h2>
-          <span class="app-status app-status-on">Prototype</span>
+          <span class="app-status">Paused</span>
         </div>
-        <p class="app-needs">Needs Android 7.0 or later on a 64-bit phone (almost every phone from 2017 on). 80 MB.</p>
-        <a class="button button-primary app-button-on" href="ashtasetu-android.apk" download>Android app <span class="app-button-note">prototype</span></a>
+        <p class="app-needs">Needs Android 7.0 or later on a 64-bit phone (almost every phone from 2017 on).</p>
+        <span class="button button-primary app-button" role="link" aria-disabled="true">Android app <span class="app-button-note">not available yet</span></span>
+        <p class="app-needs">The Android prototype is paused while it moves to the AshtaSetu name. When it is back, installing it works like this:</p>
         <ol class="app-steps">
           <li><strong>Open this page on your Android phone</strong> and tap the Android button. Your browser saves the AshtaSetu app file.</li>
           <li><strong>Open the file.</strong> Android asks before it installs an app that does not come from an app store. If it does, allow your browser: <em>Settings › Apps › Special app access › Install unknown apps</em>, choose your browser, and turn on <em>Allow</em>. The names differ a little between phones.</li>
@@ -52,8 +53,7 @@
           <li><strong>Confirm you are 18 or older</strong> and agree to the community guidelines.</li>
           <li><strong>Create your profile:</strong> your name, your age, who you would like to meet, what you are looking for and a few interests. Photos, habits and prompts can wait.</li>
         </ol>
-        <p class="doc-note">Once AshtaSetu is installed, you can turn <em>Install unknown apps</em> off again for your browser. Only install AshtaSetu from this page.</p>
-        <details class="app-check"><summary>Check the file</summary><p>The file is signed with the AshtaSetu release key. Its SHA-256 checksum is <code>6376cfa8a884162352b1559a8b1c92cf8481f41be8e57fbed81ba3ad5ad4da6a</code>, and the signing certificate’s SHA-256 fingerprint is <code>34706bcd44320df1604fbd4c938b2287f27427db7c2915306f1b8ce37d4254c5</code>. Every AshtaSetu update carries the same certificate.</p></details>
+        <p class="doc-note">Once AshtaSetu is installed, you can turn <em>Install unknown apps</em> off again for your browser. Only ever install AshtaSetu from this page.</p>
       </section>
 
       <section id="iphone" class="app-card" aria-labelledby="iphone-title">
@@ -74,24 +74,12 @@
       </section>
     </div>
 
-    <section id="video" aria-labelledby="video-title">
-      <h2 id="video-title">Watch the setup</h2>
-      <p>Opening the app file, installing it and setting up a profile, in under two minutes. It has no sound; captions describe each step.</p>
-      <figure class="app-video">
-        <video controls playsinline preload="none" width="720" height="1600" poster="assets/video/setup-android-poster.webp" aria-describedby="video-caption">
-          <source src="assets/video/setup-android.mp4" type="video/mp4">
-          <track kind="captions" srclang="en" label="English" src="assets/video/setup-android.vtt" default>
-        </video>
-        <figcaption id="video-caption">Recorded on an Android emulator with the prototype build: the profiles in it are synthetic test profiles, not real people.</figcaption>
-      </figure>
-    </section>
-
     <section id="questions" class="faq" aria-labelledby="questions-title">
       <h2 id="questions-title">Questions</h2>
       <div class="faq-list">
         <details><summary>What is in the Android prototype?</summary><p>The whole AshtaSetu experience with synthetic test profiles: onboarding, Discover, matches, chat with suggested openers, safety tools and settings. It works without an account, stores your answers only on your phone and sends nothing anywhere. Signing in, real members and calls come later, after age checks, moderation and an independent security review are in place.</p></details>
         <details><summary>Why is the iPhone version not available yet?</summary><p>The app now builds and its critical offline and connected-account flows pass in Apple’s iPhone Simulator. Native notification registration is also wired. It still needs Apple signing, notification delivery and call testing on a physical iPhone, followed by TestFlight setup. When those checks pass, the iPhone button on this page switches on.</p></details>
-        <details><summary>Is it a real dating service?</summary><p>Not yet. AshtaSetu is not a live dating service, and the profiles in the prototype and the recording are synthetic test profiles.</p></details>
+        <details><summary>Is it a real dating service?</summary><p>Not yet. AshtaSetu is not a live dating service, and the profiles in the prototype are synthetic test profiles.</p></details>
         <details><summary>How do I remove it?</summary><p>On Android, touch and hold the AshtaSetu icon and choose <em>Uninstall</em>. On iPhone, touch and hold the icon and choose <em>Remove App</em>. Deleting your account is separate: it is in the app under Settings.</p></details>
       </div>
     </section>
