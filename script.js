@@ -55,10 +55,10 @@ navLinks.addEventListener('click', (event) => {
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-// The mascots: AshtaSetu's dancing couple, cut out, in the header, the footer and waltzing across the top of the
-// home page's hero. The dance is a transparent WebM, used only where transparent WebM plays properly (not Safari or
-// anything on iOS) and never for reduced motion; everywhere else the cut-out still stays, and on the walkway it
-// still glides unless the visitor has asked for reduced motion. Nothing plays while it is off screen.
+// The mascots: AshtaSetu's dancing couple, cut out, in the header, the footer and at the top of the home page's
+// hero. They dance in one place. The dance is a transparent WebM, used only where transparent WebM plays properly
+// (not Safari or anything on iOS) and never for reduced motion; everywhere else the cut-out still stands. Nothing
+// plays while it is off screen.
 const stillPlease = window.matchMedia('(prefers-reduced-motion: reduce)');
 const ua = navigator.userAgent;
 const appleWebKit = /iP(hone|ad|od)/.test(ua) || (/Safari\//.test(ua) && !/Chrome\/|Chromium\/|Edg\/|OPR\//.test(ua));
@@ -67,7 +67,7 @@ const mascots = [...document.querySelectorAll('[data-mascot]')];
 const onScreen = new Map();
 function danceVideo(box) {
   let video = box.querySelector('video');
-  if (!video && canDance()) {
+  if (!video) {
     video = document.createElement('video');
     Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'auto' });
     video.setAttribute('aria-hidden', 'true');
@@ -79,44 +79,20 @@ function danceVideo(box) {
 }
 function updateMascots() {
   for (const box of mascots) {
-    const video = onScreen.get(box) && canDance() ? danceVideo(box) : box.querySelector('video');
+    if (onScreen.get(box) && canDance()) { danceVideo(box).play().catch(() => {}); continue; }
+    const video = box.querySelector('video');
     if (!video) continue;
-    if (onScreen.get(box) && canDance()) video.play().catch(() => {});
-    else { video.pause(); if (stillPlease.matches) box.classList.remove('dancing'); }
+    video.pause();
+    if (stillPlease.matches) { video.currentTime = 0; box.classList.remove('dancing'); }
   }
-}
-// The walkway: the couple waltzes from side to side along the top of the hero and turns at each end.
-const walkway = document.querySelector('.walkway');
-const walker = walkway && walkway.querySelector('.walker');
-const walk = { x: null, dir: 1, last: 0, running: false };
-function walkPlace() { walker.style.transform = `translateX(${walk.x}px)`; walker.classList.toggle('flip', walk.dir < 0); }
-function walkStep(t) {
-  if (!walk.running) return;
-  const dt = walk.last ? Math.min(0.05, (t - walk.last) / 1000) : 0;
-  walk.last = t;
-  const max = Math.max(0, walkway.clientWidth - walker.offsetWidth);
-  walk.x += walk.dir * walker.offsetWidth * 0.32 * dt;
-  if (walk.x >= max) { walk.x = max; walk.dir = -1; }
-  if (walk.x <= 0) { walk.x = 0; walk.dir = 1; }
-  walkPlace();
-  requestAnimationFrame(walkStep);
-}
-function updateWalk() {
-  if (!walker) return;
-  const go = onScreen.get(walker.closest('[data-mascot]')) && !stillPlease.matches && !document.hidden;
-  if (walk.x === null) { walk.x = 0; walkPlace(); }
-  if (go && !walk.running) { walk.running = true; walk.last = 0; requestAnimationFrame(walkStep); }
-  if (!go) walk.running = false;
-  walkway.classList.toggle('gliding', go);
 }
 if (mascots.length && 'IntersectionObserver' in window) {
   const watcher = new IntersectionObserver((entries) => {
     for (const entry of entries) onScreen.set(entry.target, entry.isIntersecting);
-    updateMascots(); updateWalk();
+    updateMascots();
   });
   mascots.forEach((box) => watcher.observe(box));
-  stillPlease.addEventListener('change', () => { updateMascots(); updateWalk(); });
-  document.addEventListener('visibilitychange', updateWalk);
+  stillPlease.addEventListener('change', updateMascots);
 }
 
 // The hosts' speech bubble steps through its lines, a few seconds each, fading between them.
